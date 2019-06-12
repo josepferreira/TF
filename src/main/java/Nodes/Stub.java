@@ -97,4 +97,8 @@ public class Stub {
 
         return cf;
     }
+
+    public void close() throws SpreadException {
+        connection.disconnect();
+    }
 }

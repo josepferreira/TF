@@ -1,6 +1,9 @@
 package Nodes;
 
 import Messages.Ordem;
+import Messages.Protocol;
+import Messages.RespostaOrdem;
+import io.atomix.utils.serializer.Serializer;
 import spread.*;
 
 import java.net.InetAddress;
@@ -11,11 +14,11 @@ import java.util.LinkedList;
 
 public class Server {
 
-    public HashMap<String,Long> acoesEmpresas = new HashMap<>(); //mapa com o conjunto de empresas existentes e as acoes disponiveis
+    public HashMap<String,Holder> acoesHolders = new HashMap<>(); //mapa com o conjunto de empresas existentes e as acoes disponiveis
 
     public LinkedList<Ordem> filaOrdens = new LinkedList<>(); //fila com as ordens prontas a executar - FIFO
 
-    public HashMap<String,Ordem> ordensConcluidas = new HashMap<>(); //mapa com as ordens já concluídas
+    public HashMap<String,Ordem> ordensConcluidas = new HashMap<>(); //mapa com as ordens já concluídas, se calhar deviamos por uma resposta também aqui nao?
 
     public HashMap<String,Ordem> ordensPendentes = new HashMap<>(); //mapa com as ordenas atribuidas ainda nao concluidas
 
@@ -26,9 +29,56 @@ public class Server {
     public String identificador;
     public static String nomeGrupo = "servidores";
 
+    public Serializer s = Protocol.newSerializer();
+
     public BasicMessageListener bml = new BasicMessageListener() {
         @Override
         public void messageReceived(SpreadMessage spreadMessage) {
+
+            Object o = s.decode(spreadMessage.getData());
+
+            if(o instanceof Ordem){
+                System.out.println("Para já tratamos como nas aulas, ou seja diretamente!");
+
+                Ordem ord = (Ordem)o;
+
+                boolean res = false;
+
+                if(ord.compra){
+                    Holder h = acoesHolders.get(ord.holder);
+                    if(h != null){
+                        res = h.compra(ord.quantidade);
+                    }
+                }
+                else{
+                    Holder h = acoesHolders.get(ord.holder);
+                    if(h != null){
+                        res = h.venda(ord.quantidade);
+                    }
+                    else{
+                        System.out.println("Holder não existe!!! O que fazer???");
+                        Holder ho = new Holder(ord.holder,ord.quantidade);
+                        acoesHolders.put(ord.holder,ho);
+                        res = true;
+                    }
+                }
+
+                ordensConcluidas.put(ord.id,ord);
+
+                RespostaOrdem ro = new RespostaOrdem(ord.id,res);
+                SpreadMessage sm = new SpreadMessage();
+                sm.setData(s.encode(ro));
+                sm.addGroup(spreadMessage.getSender());
+                sm.setReliable();
+                try {
+                    connection.multicast(sm);
+                } catch (SpreadException e) {
+                    e.printStackTrace();
+                }
+            }
+            else{
+                System.out.println("Erro, recebi algo que não é uma ordem!");
+            }
 
         }
     };
@@ -41,6 +91,14 @@ public class Server {
 
         group.join(connection, nomeGrupo);
         connection.add(bml);
+
+        while(true){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 
