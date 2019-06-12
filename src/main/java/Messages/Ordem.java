@@ -3,13 +3,13 @@ package Messages;
 public class Ordem {
     public String id;
     public long quantidade;
-    public String empresa;
+    public String holder;
     public boolean compra;
 
-    public Ordem(String id, long quantidade, String empresa, boolean compra) {
+    public Ordem(String id, long quantidade, String holder, boolean compra) {
         this.id = id;
         this.quantidade = quantidade;
-        this.empresa = empresa;
+        this.holder = holder;
         this.compra = compra;
     }
 }
