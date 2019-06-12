@@ -266,10 +266,10 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Server1" />
-      <item itemvalue="Application.Server3" />
       <item itemvalue="Application.Cliente1" />
+      <item itemvalue="Application.Server1" />
       <item itemvalue="Application.Server2" />
+      <item itemvalue="Application.Server3" />
     </list>
   </component>
   <component name="SvnConfiguration">
