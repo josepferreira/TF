@@ -1,8 +1,6 @@
 package Nodes;
 
-import Messages.Ordem;
-import Messages.Protocol;
-import Messages.RespostaOrdem;
+import Messages.*;
 import io.atomix.utils.serializer.Serializer;
 import spread.*;
 
@@ -44,10 +42,23 @@ public class Server {
 
                 boolean res = false;
 
-                if(ord.compra){
+                if(o instanceof OrdemCompra){
+                    OrdemCompra oc = (OrdemCompra)ord;
                     Holder h = acoesHolders.get(ord.holder);
-                    if(h != null){
+                    Holder aux = acoesHolders.get(oc.comprador); //comprador das acoes
+                    if(h != null && aux != null){
                         res = h.compra(ord.quantidade);
+                        if(res) {
+                            aux.adiciona(oc.quantidade);
+                        }
+                    }
+                    else{
+                        if(h == null) {
+                            System.out.println("Holder é null! O que fazer???");
+                        }
+                        else{
+                            System.out.println("Comprador é null! O que fazer???");
+                        }
                     }
                 }
                 else{
@@ -57,9 +68,8 @@ public class Server {
                     }
                     else{
                         System.out.println("Holder não existe!!! O que fazer???");
-                        Holder ho = new Holder(ord.holder,ord.quantidade);
-                        acoesHolders.put(ord.holder,ho);
-                        res = true;
+//                        Holder ho = new Holder(ord.holder,ord.quantidade);
+//                        acoesHolders.put(ord.holder,ho);
                     }
                 }
 
@@ -70,6 +80,51 @@ public class Server {
                 sm.setData(s.encode(ro));
                 sm.addGroup(spreadMessage.getSender());
                 sm.setReliable();
+                try {
+                    connection.multicast(sm);
+                } catch (SpreadException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            else if (o instanceof Registo) {
+
+                Registo r = ((Registo) o);
+
+                boolean res = false;
+
+                if (!acoesHolders.containsKey(r.holder)) {
+
+                    Holder n = new Holder(r.holder, r.acoes);
+
+                    acoesHolders.put(r.holder, n);
+
+                    res = true;
+
+                }
+
+                RespostaOrdem ro = new RespostaOrdem(r.id, res);
+                SpreadMessage sm = new SpreadMessage();
+                sm.setData(s.encode(ro));
+                sm.addGroup(spreadMessage.getSender());
+                sm.setReliable();
+                try {
+                    connection.multicast(sm);
+                } catch (SpreadException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+            else if(o instanceof PedidoHolders){
+                String id = ((PedidoHolders)o).id;
+                RespostaHolders rh = new RespostaHolders(id,acoesHolders);
+
+                SpreadMessage sm = new SpreadMessage();
+                sm.setData(s.encode(rh));
+                sm.addGroup(spreadMessage.getSender());
+                sm.setReliable();
+
                 try {
                     connection.multicast(sm);
                 } catch (SpreadException e) {

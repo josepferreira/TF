@@ -17,3 +17,10 @@
 - Em termos de estado temos de ter:
     - uma fila FIFO com as ações
     - um conjunto de empresas e as suas ações disponíveis
+
+### Transferência de estado
+- Podemos ter um identificador incremental associoado a cada operação que chega, garantindo assim sempre ordem
+
+- Quando queremos transferir estado indicamos qual o último identificador que conhecemos e o servidor que nos responder apenas responde com as operações com os identificadores superiores (os q ainda n conhecemos)
+
+- Temos de guardar sempre em ficheiro!

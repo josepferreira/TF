@@ -1,5 +1,6 @@
 package Messages;
 
+import Nodes.Holder;
 import io.atomix.utils.serializer.Serializer;
 
 import java.util.HashMap;
@@ -11,7 +12,12 @@ public class Protocol {
                 .withTypes(
                         HashMap.class,
                         Ordem.class,
-                        RespostaOrdem.class
+                        OrdemCompra.class,
+                        Registo.class,
+                        RespostaOrdem.class,
+                        Holder.class,
+                        PedidoHolders.class,
+                        RespostaHolders.class
                 )
                 .build();
     }
