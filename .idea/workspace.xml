@@ -2,18 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c3d9e37c-6b2f-4eec-a4d0-89539d28f81c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Messages/OrdemCompra.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Messages/PedidoHolders.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Messages/Registo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Messages/RespostaHolders.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Messages/RespostaRegisto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Configuration/Config.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Messages/Replication/StateReply.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Messages/Replication/StateRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Messages/Replication/StateTransfer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Messages/Ordem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Messages/Ordem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Messages/Protocol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Messages/Protocol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Nodes/Holder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Nodes/Holder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Messages/Ordem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Messages/Operations/Ordem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Messages/OrdemCompra.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Messages/Operations/OrdemCompra.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Messages/PedidoHolders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Messages/Operations/PedidoHolders.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Messages/Protocol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Configuration/Protocol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Messages/Registo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Messages/Operations/Registo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Messages/RespostaHolders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Messages/Operations/RespostaHolders.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Messages/RespostaOrdem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Messages/Operations/RespostaOrdem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Messages/RespostaRegisto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Messages/Operations/RespostaRegisto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Nodes/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Nodes/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Nodes/Stub.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Nodes/Stub.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/UI/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UI/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/UI/Servidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UI/Servidor.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -29,12 +35,12 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/UI/Menu.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Messages/Replication/StateRequest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2175">
-              <caret line="155" column="44" selection-start-line="155" selection-start-column="44" selection-end-line="155" selection-end-column="44" />
+            <state relative-caret-position="75">
+              <caret line="5" column="36" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#145#146#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -43,69 +49,58 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Nodes/Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="58">
-              <caret line="120" column="74" selection-start-line="120" selection-start-column="74" selection-end-line="120" selection-end-column="74" />
+            <state relative-caret-position="366">
+              <caret line="46" column="33" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1624#2426#1" />
+                <element signature="e#1400#3392#1" />
+                <element signature="e#3437#4190#1" />
+                <element signature="e#4238#4742#1" />
+                <element signature="e#6748#6943#1" />
+                <element signature="e#8218#10210#1" />
+                <element signature="e#10255#11008#1" />
+                <element signature="e#11056#11560#1" />
+                <element signature="e#11607#12184#1" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Nodes/Holder.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Messages/Replication/StateTransfer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="645">
-              <caret line="45" selection-start-line="45" selection-end-line="45" />
+            <state relative-caret-position="150">
+              <caret line="10" column="12" lean-forward="true" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Nodes/Stub.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="780">
-              <caret line="61" column="42" selection-start-line="61" selection-start-column="42" selection-end-line="61" selection-end-column="42" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Messages/PedidoHolders.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="37" selection-start-line="5" selection-start-column="37" selection-end-line="5" selection-end-column="37" />
-              <folding>
-                <element signature="e#135#136#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Messages/RespostaHolders.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Messages/Protocol.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Messages/Replication/StateReply.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="240">
-              <caret line="19" column="45" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
+              <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Configuration/Protocol.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="26" column="43" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Configuration/Config.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
             </state>
           </provider>
         </entry>
@@ -119,6 +114,14 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>apresena</find>
+      <find>identificador</find>
+      <find>SpreadMessage(</find>
+      <find>descar</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -128,7 +131,6 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/Messages/RespostaOrdem.java" />
         <option value="$PROJECT_DIR$/src/main/java/UI/Valores.java" />
-        <option value="$PROJECT_DIR$/src/main/java/UI/Servidor.java" />
         <option value="$PROJECT_DIR$/src/main/java/UI/Cliente.java" />
         <option value="$PROJECT_DIR$/src/main/java/Messages/Ordem.java" />
         <option value="$PROJECT_DIR$/src/main/java/Messages/OrdemCompra.java" />
@@ -137,9 +139,16 @@
         <option value="$PROJECT_DIR$/src/main/java/Messages/PedidoHolders.java" />
         <option value="$PROJECT_DIR$/src/main/java/Messages/Protocol.java" />
         <option value="$PROJECT_DIR$/src/main/java/Messages/RespostaHolders.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Nodes/Stub.java" />
         <option value="$PROJECT_DIR$/src/main/java/Nodes/Holder.java" />
         <option value="$PROJECT_DIR$/src/main/java/UI/Menu.java" />
+        <option value="$PROJECT_DIR$/src/main/java/UI/Servidor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Messages/Operations/Ordem.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Messages/Replication/StateRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Nodes/Stub.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Configuration/Config.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Messages/Replication/StateReply.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Messages/Replication/StateTransfer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Configuration/Protocol.java" />
         <option value="$PROJECT_DIR$/src/main/java/Nodes/Server.java" />
       </list>
     </option>
@@ -161,8 +170,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Course" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -194,7 +201,24 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Configuration" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tp1819" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TF" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="Messages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tp1819" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TF" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Messages" type="462c0819:PsiDirectoryNode" />
+              <item name="Replication" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="tp1819" type="b2602c69:ProjectViewProjectNode" />
@@ -216,13 +240,16 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Course" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../LEI/Key-DocumentDB/DB" />
+    <property name="ToolWindowRun.ShowToolbar" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -236,7 +263,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Server3">
+  <component name="RunManager" selected="Application.Server4">
     <configuration name="Cliente1" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="UI.Cliente" />
       <module name="TF" />
@@ -247,6 +274,7 @@
     <configuration name="Server1" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="UI.Servidor" />
       <module name="TF" />
+      <option name="PROGRAM_PARAMETERS" value="1" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -265,9 +293,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Server4" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="UI.Servidor" />
+      <module name="TF" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.Cliente1" />
       <item itemvalue="Application.Server1" />
+      <item itemvalue="Application.Server4" />
       <item itemvalue="Application.Server2" />
       <item itemvalue="Application.Server3" />
     </list>
@@ -286,9 +322,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="67" y="25" width="1299" height="743" extended-state="6" />
+    <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27134877" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2888766" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -297,7 +334,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49960095" weight="0.58143324" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49960095" weight="0.58099353" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -326,13 +363,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/Ordem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/UI/Cliente.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -343,48 +373,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/UI/Servidor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="34" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/RespostaRegisto.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="58" selection-start-line="7" selection-start-column="58" selection-end-line="7" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/Registo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/RespostaOrdem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="29" lean-forward="true" selection-start-line="3" selection-start-column="4" selection-end-line="4" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/OrdemCompra.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/UI/Menu.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2175">
-          <caret line="155" column="44" selection-start-line="155" selection-start-column="44" selection-end-line="155" selection-end-column="44" />
+        <state relative-caret-position="-429">
+          <caret line="39" column="27" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -398,53 +390,149 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Nodes/Stub.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Configuration.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
-          <caret line="61" column="42" selection-start-line="61" selection-start-column="42" selection-end-line="61" selection-end-column="42" />
+        <state>
+          <caret column="26" selection-start-column="26" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/Operations/RespostaRegisto.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/Operations/RespostaOrdem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/Operations/Ordem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/Operations/RespostaHolders.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/PedidoHolders.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/Operations/Registo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="37" selection-start-line="5" selection-start-column="37" selection-end-line="5" selection-end-column="37" />
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/Operations/PedidoHolders.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding>
+            <element signature="e#107#108#0" expanded="true" />
             <element signature="e#135#136#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/RespostaHolders.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/UI/Servidor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
+        <state relative-caret-position="165">
+          <caret line="11" column="44" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/Protocol.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/Operations/OrdemCompra.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Nodes/Stub.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1155">
+          <caret line="77" column="98" selection-start-line="77" selection-start-column="98" selection-end-line="77" selection-end-column="98" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#venda#0;class#Stub#0" />
+            <element signature="method#compra#0;class#Stub#0" />
+            <element signature="method#close#0;class#Stub#0" />
+            <element signature="method#regista#0;class#Stub#0" />
+            <element signature="method#holders#0;class#Stub#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Configuration/Config.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/Replication/StateReply.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="19" column="45" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
+          <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/Replication/StateRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="36" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
+          <folding>
+            <element signature="e#145#146#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Messages/Replication/StateTransfer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="12" lean-forward="true" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Configuration/Protocol.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="26" column="43" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Nodes/Server.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="58">
-          <caret line="120" column="74" selection-start-line="120" selection-start-column="74" selection-end-line="120" selection-end-column="74" />
+        <state relative-caret-position="366">
+          <caret line="46" column="33" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1624#2426#1" />
+            <element signature="e#1400#3392#1" />
+            <element signature="e#3437#4190#1" />
+            <element signature="e#4238#4742#1" />
+            <element signature="e#6748#6943#1" />
+            <element signature="e#8218#10210#1" />
+            <element signature="e#10255#11008#1" />
+            <element signature="e#11056#11560#1" />
+            <element signature="e#11607#12184#1" />
           </folding>
         </state>
       </provider>

@@ -1,6 +1,5 @@
 package UI;
 
-import Messages.Ordem;
 import Nodes.Holder;
 import Nodes.Stub;
 import spread.SpreadException;
@@ -38,6 +37,7 @@ public class Menu {
             }
             catch(Exception e){
                 System.out.println(msg);
+                quant = 45;
             }
         }while(quant <= 0);
         return quant;
@@ -103,15 +103,20 @@ public class Menu {
 
     public void apresenta(){
         int i = 1;
+        int tamanho = opcoes.size();
         for(String op: opcoes){
             System.out.println(i + " -> " + op);
             i++;
+            if(i == tamanho){
+                System.out.println("Outro -> " + opcoes.get(i-1));
+                break;
+            }
         }
     }
 
     public int leOpcao(){
         System.out.println("Opção: ");
-        return (int)leInteiro("Colque um valor válido, entre 1 e 3");
+        return (int)leInteiro("Colque um valor válido!");
     }
 
     public void corre() throws SpreadException {

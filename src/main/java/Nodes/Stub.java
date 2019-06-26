@@ -1,6 +1,8 @@
 package Nodes;
 
-import Messages.*;
+import Configuration.Config;
+import Configuration.Protocol;
+import Messages.Operations.*;
 import io.atomix.utils.serializer.Serializer;
 import spread.*;
 
@@ -9,12 +11,11 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 
 public class Stub {
     public SpreadConnection connection = new SpreadConnection();
 
-    public HashMap<String,Ordem> ordens = new HashMap<>();
+    public HashMap<String, Ordem> ordens = new HashMap<>();
     public HashMap<String,CompletableFuture<Boolean>> cfs = new HashMap<>();
     public HashMap<String,CompletableFuture<HashMap<String,Holder>>> cfHolder = new HashMap<>();
 
@@ -70,7 +71,7 @@ public class Stub {
     };
 
     public Stub() throws UnknownHostException, SpreadException {
-        connection.connect(InetAddress.getByName("localhost"), 0, null, false, false);
+        connection.connect(InetAddress.getByName(Config.spreadHost), 0, null, false, false);
         connection.add(bml);
     }
 
@@ -85,7 +86,7 @@ public class Stub {
 
         SpreadMessage sm = new SpreadMessage();
         sm.setData(s.encode(o));
-        sm.addGroup(Server.nomeGrupo);
+        sm.addGroup(Config.nomeGrupo);
         sm.setAgreed(); // ao defiirmos isto estamos a garantir ordem total, pelo q podemos ter varios stubs
         sm.setReliable();
         connection.multicast(sm);
@@ -109,7 +110,7 @@ public class Stub {
 
         SpreadMessage sm = new SpreadMessage();
         sm.setData(s.encode(o));
-        sm.addGroup(Server.nomeGrupo);
+        sm.addGroup(Config.nomeGrupo);
         sm.setAgreed(); // ao defiirmos isto estamos a garantir ordem total, pelo q podemos ter varios stubs
         sm.setReliable();
         connection.multicast(sm);
@@ -138,7 +139,7 @@ public class Stub {
 
         SpreadMessage sm = new SpreadMessage();
         sm.setData(s.encode(r));
-        sm.addGroup(Server.nomeGrupo);
+        sm.addGroup(Config.nomeGrupo);
         sm.setAgreed(); // ao defiirmos isto estamos a garantir ordem total, pelo q podemos ter varios stubs
         sm.setReliable();
         connection.multicast(sm);
@@ -158,7 +159,7 @@ public class Stub {
         PedidoHolders ph = new PedidoHolders(id);
         SpreadMessage sm = new SpreadMessage();
         sm.setData(s.encode(ph));
-        sm.addGroup(Server.nomeGrupo);
+        sm.addGroup(Config.nomeGrupo);
         sm.setAgreed(); // ao defiirmos isto estamos a garantir ordem total, pelo q podemos ter varios stubs
         sm.setReliable();
         connection.multicast(sm);

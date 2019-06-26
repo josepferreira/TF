@@ -1,4 +1,4 @@
-package Messages;
+package Messages.Operations;
 
 public class Registo {
     public String id;

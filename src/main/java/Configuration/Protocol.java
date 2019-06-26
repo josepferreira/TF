@@ -1,5 +1,9 @@
-package Messages;
+package Configuration;
 
+import Messages.Operations.*;
+import Messages.Replication.StateReply;
+import Messages.Replication.StateRequest;
+import Messages.Replication.StateTransfer;
 import Nodes.Holder;
 import io.atomix.utils.serializer.Serializer;
 
@@ -17,7 +21,10 @@ public class Protocol {
                         RespostaOrdem.class,
                         Holder.class,
                         PedidoHolders.class,
-                        RespostaHolders.class
+                        RespostaHolders.class,
+                        StateReply.class,
+                        StateRequest.class,
+                        StateTransfer.class
                 )
                 .build();
     }
