@@ -34,9 +34,26 @@ public class Menu {
 
             try {
                 quant = Long.parseLong(aux);
+                if(quant <= 0){
+                    System.out.println(msg);
+                }
             }
             catch(Exception e){
                 System.out.println(msg);
+            }
+        }while(quant <= 0);
+        return quant;
+    }
+
+    private long leOpcaoAux(String msg){
+        long quant = -1;
+        do {
+            String aux = s.nextLine();
+
+            try {
+                quant = Long.parseLong(aux);
+            }
+            catch(Exception e){
                 quant = 45;
             }
         }while(quant <= 0);
@@ -116,7 +133,7 @@ public class Menu {
 
     public int leOpcao(){
         System.out.println("Opção: ");
-        return (int)leInteiro("Colque um valor válido!");
+        return (int)leOpcaoAux("Colque um valor válido!");
     }
 
     public void corre() throws SpreadException {
