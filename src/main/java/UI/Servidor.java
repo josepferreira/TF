@@ -9,6 +9,10 @@ import java.util.Scanner;
 public class Servidor {
 
     public static void main(String[] args) throws SpreadException, UnknownHostException {
-        Server s = new Server(args.length == 0);
+        if(args.length == 0){
+            System.out.println("Coloque no mínimo um identificador nos argumentos");
+            return;
+        }
+        Server s = new Server(args.length == 1, args[0]);
     }
 }

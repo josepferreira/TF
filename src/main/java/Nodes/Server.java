@@ -2,6 +2,8 @@ package Nodes;
 
 import Configuration.Config;
 import Configuration.Protocol;
+import Log.LogInterface;
+import Log.StateLog;
 import Messages.Operations.*;
 import Messages.Replication.StateReply;
 import Messages.Replication.StateRequest;
@@ -45,6 +47,9 @@ public class Server {
     public int tamanhoTotal = 0;
 
     public static int MAXSIZE = 10;//*1000;
+
+
+    public LogInterface log;
 
 
 
@@ -382,6 +387,8 @@ public class Server {
         else{
             System.out.println("Erro, recebi algo que não estava à espera! " + o.getClass());
         }
+
+        log.writeCheckpoint(new StateLog(acoesHolders,ordensConcluidas,0));
     }
 
     private void recuperaEstado() {
@@ -400,7 +407,10 @@ public class Server {
         this.ordensConcluidas.putAll(sr.ordensConcluidas);
     }
 
-    public Server(boolean recupera) throws UnknownHostException, SpreadException {
+    public Server(boolean recupera, String id) throws UnknownHostException, SpreadException {
+
+        log = new LogInterface(id+"-update.log",id+"checkpoint.log");
+        log.readLogCheckpoint();
 
         connection.connect(InetAddress.getByName(Config.spreadHost), 0, null, false, false);
         //para já não precisamos de nos preocupar com o group membership visto que vamos usar ativa

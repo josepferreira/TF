@@ -1,5 +1,6 @@
 package Configuration;
 
+import Log.StateLog;
 import Messages.Operations.*;
 import Messages.Replication.StateReply;
 import Messages.Replication.StateRequest;
@@ -24,7 +25,8 @@ public class Protocol {
                         RespostaHolders.class,
                         StateReply.class,
                         StateRequest.class,
-                        StateTransfer.class
+                        StateTransfer.class,
+                        StateLog.class
                 )
                 .build();
     }

@@ -1,2 +1,6 @@
 src/test
-target/**/*.class       
+target/**/*.class
+target/**/*.jar
+target/maven-archiver/
+target/maven-status/
+*.log
