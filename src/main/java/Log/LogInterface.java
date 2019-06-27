@@ -51,12 +51,12 @@ public class LogInterface {
     public ArrayList<LogEntry> readLogUpdates(){
         ArrayList<LogEntry> res = new ArrayList<>();
 
-        System.out.println("Ler updates");
+//        System.out.println("Ler updates");
         while(readerUpdate.hasNext()){
-            System.out.println("Entrada de update");
+//            System.out.println("Entrada de update");
             res.add((LogEntry)readerUpdate.next().entry());
         }
-        System.out.println("Updates lidos");
+//        System.out.println("Updates lidos");
 
         return res;
     }
@@ -69,13 +69,13 @@ public class LogInterface {
     }
 
     public StateLog readLogCheckpoint(){
-        System.out.println("Ler logs");
+//        System.out.println("Ler logs");
         StateLog res = null;
         while(readerCheckPoint.hasNext()){
             res = (StateLog) readerCheckPoint.next().entry();
-            System.out.println(res);
+//            System.out.println(res);
         }
-        System.out.println("Li checkpoints");
+//        System.out.println("Li checkpoints");
         return res;
     }
 

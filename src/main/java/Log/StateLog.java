@@ -10,12 +10,12 @@ import java.util.LinkedHashMap;
 public class StateLog {
 
     public HashMap<String, Holder> acoesHolders; //mapa com o conjunto de empresas existentes e as acoes disponiveis
-    public LinkedHashMap<String, Operacao> ordensConcluidas; //mapa com as ordens já concluídas, se calhar deviamos por uma resposta também aqui nao?
+//    public LinkedHashMap<String, Operacao> ordensConcluidas; //mapa com as ordens já concluídas, se calhar deviamos por uma resposta também aqui nao?
     public int id;
 
     public StateLog(HashMap<String, Holder> acoesHolders, LinkedHashMap<String, Operacao> ordensConcluidas, int id) {
         this.acoesHolders = acoesHolders;
-        this.ordensConcluidas = ordensConcluidas;
+//        this.ordensConcluidas = ordensConcluidas;
         this.id = id;
     }
 
@@ -23,7 +23,7 @@ public class StateLog {
     public String toString() {
         return "StateLog{" +
                 "acoesHolders=" + acoesHolders +
-                ", ordensConcluidas=" + ordensConcluidas +
+//                ", ordensConcluidas=" + ordensConcluidas +
                 ", id=" + id +
                 '}';
     }

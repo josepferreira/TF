@@ -368,18 +368,37 @@ public class Server {
         }
     }
 
+    public void recuperaEstadoLogAux(){
+        for(LogEntry le: log.readLogUpdates()){
+                //fazer update
+            if(le.operacao instanceof OrdemCompra){
+                executaOrdemCompra((OrdemCompra)le.operacao);
+            }
+            else if(le.operacao instanceof Ordem){
+                executaOrdemVenda((Ordem)le.operacao);
+            }
+            else if(le.operacao instanceof Registo){
+                executaRegisto((Registo)le.operacao);
+            }
+            ordensConcluidas.put(le.operacao.id,le.operacao);
+            nrUpdates++;
+        }
+
+//        System.out.println("NR: " + nrUpdates);
+    }
+
     public void recuperaEstadoLog(){
         StateLog estado = log.readLogCheckpoint();
         if(estado != null) {
             checkpointAtual = estado.id;
             acoesHolders = estado.acoesHolders;
-            ordensConcluidas = estado.ordensConcluidas;
+//            ordensConcluidas = estado.ordensConcluidas;
         }
 
         //recuperar updates
         for(LogEntry le: log.readLogUpdates()){
-            System.out.println("Checkpoint atual: " + checkpointAtual);
-            System.out.println("Le: " + le.checkpoint);
+//            System.out.println("Checkpoint atual: " + checkpointAtual);
+//            System.out.println("Le: " + le.checkpoint);
             if(le.checkpoint > checkpointAtual){
                 //fazer update
                 if(le.operacao instanceof OrdemCompra){
@@ -395,7 +414,7 @@ public class Server {
             ordensConcluidas.put(le.operacao.id,le.operacao);
             nrUpdates++;
         }
-
+//        System.out.println("NR: " + nrUpdates);
         checkpointAtual++;
     }
 
@@ -437,6 +456,23 @@ public class Server {
             }
         }
 
+    }
+
+    public Server(String id){
+        ArrayList<Long> times = new ArrayList<Long>();
+        for(int i = 0; i < 50; i++){
+            log = new LogInterface(id+"-update.log",id+"checkpoint.log");
+
+            long timeI = System.currentTimeMillis();
+            recuperaEstadoLogAux();
+            long timeF = System.currentTimeMillis();
+
+//            System.out.println("Tempo em millis: " + (timeF-timeI));
+            times.add((timeF-timeI));
+            ordensConcluidas.clear();
+        }
+
+        System.out.println("Média: " + times.stream().mapToDouble(a -> a).average());
     }
 
     /*public void introduzOrdem(Ordem o){
