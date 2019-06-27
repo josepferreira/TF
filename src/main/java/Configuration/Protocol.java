@@ -1,5 +1,6 @@
 package Configuration;
 
+import Log.LogEntry;
 import Log.StateLog;
 import Messages.Operations.*;
 import Messages.Replication.StateReply;
@@ -9,6 +10,7 @@ import Nodes.Holder;
 import io.atomix.utils.serializer.Serializer;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class Protocol {
 
@@ -16,6 +18,8 @@ public class Protocol {
         return Serializer.builder()
                 .withTypes(
                         HashMap.class,
+                        LinkedHashMap.class,
+                        Operacao.class,
                         Ordem.class,
                         OrdemCompra.class,
                         Registo.class,
@@ -26,7 +30,8 @@ public class Protocol {
                         StateReply.class,
                         StateRequest.class,
                         StateTransfer.class,
-                        StateLog.class
+                        StateLog.class,
+                        LogEntry.class
                 )
                 .build();
     }

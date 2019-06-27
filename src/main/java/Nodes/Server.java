@@ -2,6 +2,7 @@ package Nodes;
 
 import Configuration.Config;
 import Configuration.Protocol;
+import Log.LogEntry;
 import Log.LogInterface;
 import Log.StateLog;
 import Messages.Operations.*;
@@ -23,7 +24,7 @@ public class Server {
 
 //    public LinkedList<Ordem> filaOrdens = new LinkedList<>(); //fila com as ordens prontas a executar - FIFO
 
-    public HashMap<String, Ordem> ordensConcluidas = new HashMap<>(); //mapa com as ordens já concluídas, se calhar deviamos por uma resposta também aqui nao?
+    public LinkedHashMap<String, Operacao> ordensConcluidas = new LinkedHashMap<>(); //mapa com as ordens já concluídas, se calhar deviamos por uma resposta também aqui nao?
 
 //    public HashMap<String,Ordem> ordensPendentes = new HashMap<>(); //mapa com as ordenas atribuidas ainda nao concluidas
 
@@ -31,7 +32,6 @@ public class Server {
 
     public SpreadConnection connection = new SpreadConnection();
     public SpreadGroup group = new SpreadGroup();
-    public static String nomeGrupo = "servidores";
 
     public Serializer s = Protocol.newSerializer();
 
@@ -50,11 +50,26 @@ public class Server {
 
 
     public LogInterface log;
+    public int checkpointAtual = -1;
+    public int operacoesCheckpoint = 0;
+    public int nrUpdates  = 0;
 
+    public LinkedHashMap<String,Operacao> getStateOrders(int updatesRealizados){
+        LinkedHashMap<String,Operacao> res = new LinkedHashMap<>();
+        int updateAtual = 0;
 
+        for(Map.Entry<String,Operacao> entry : ordensConcluidas.entrySet()){
+            if(updateAtual >= updatesRealizados){
+                res.put(entry.getKey(),entry.getValue());
+            }
+            updateAtual++;
+        }
 
-    public ArrayList<byte[]> getStateMessages(String id){
-        StateReply sr = new StateReply(acoesHolders,ordensConcluidas);
+        return res;
+    }
+
+    public ArrayList<byte[]> getStateMessages(String id, int updatesRealizados){
+        StateReply sr = new StateReply(getStateOrders(updatesRealizados));
 
         byte[] aux = s.encode(sr);
         int tamanho = aux.length;
@@ -134,131 +149,63 @@ public class Server {
 
             trataMensagem(spreadMessage);
 
-            /*if(o instanceof Ordem){
-                System.out.println("Para já tratamos como nas aulas, ou seja diretamente!");
-
-                Ordem ord = (Ordem)o;
-
-                boolean res = false;
-
-                if(o instanceof OrdemCompra){
-                    OrdemCompra oc = (OrdemCompra)ord;
-                    Holder h = acoesHolders.get(ord.holder);
-                    Holder aux = acoesHolders.get(oc.comprador); //comprador das acoes
-                    if(h != null && aux != null){
-                        res = h.compra(ord.quantidade);
-                        if(res) {
-                            aux.adiciona(oc.quantidade);
-                        }
-                    }
-                    else{
-                        if(h == null) {
-                            System.out.println("Holder é null! O que fazer???");
-                        }
-                        else{
-                            System.out.println("Comprador é null! O que fazer???");
-                        }
-                    }
-                }
-                else{
-                    Holder h = acoesHolders.get(ord.holder);
-                    if(h != null){
-                        res = h.venda(ord.quantidade);
-                    }
-                    else{
-                        System.out.println("Holder não existe!!! O que fazer???");
-//                        Holder ho = new Holder(ord.holder,ord.quantidade);
-//                        acoesHolders.put(ord.holder,ho);
-                    }
-                }
-
-                ordensConcluidas.put(ord.id,ord);
-
-                RespostaOrdem ro = new RespostaOrdem(ord.id,res);
-                SpreadMessage sm = new SpreadMessage();
-                sm.setData(s.encode(ro));
-                sm.addGroup(spreadMessage.getSender());
-                sm.setReliable();
-                try {
-                    connection.multicast(sm);
-                } catch (SpreadException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            else if (o instanceof Registo) {
-
-                Registo r = ((Registo) o);
-
-                boolean res = false;
-
-                if (!acoesHolders.containsKey(r.holder)) {
-
-                    Holder n = new Holder(r.holder, r.acoes);
-
-                    acoesHolders.put(r.holder, n);
-
-                    res = true;
-
-                }
-
-                RespostaOrdem ro = new RespostaOrdem(r.id, res);
-                SpreadMessage sm = new SpreadMessage();
-                sm.setData(s.encode(ro));
-                sm.addGroup(spreadMessage.getSender());
-                sm.setReliable();
-                try {
-                    connection.multicast(sm);
-                } catch (SpreadException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-            else if(o instanceof PedidoHolders){
-                String id = ((PedidoHolders)o).id;
-                RespostaHolders rh = new RespostaHolders(id,acoesHolders);
-
-                SpreadMessage sm = new SpreadMessage();
-                sm.setData(s.encode(rh));
-                sm.addGroup(spreadMessage.getSender());
-                sm.setReliable();
-
-                try {
-                    connection.multicast(sm);
-                } catch (SpreadException e) {
-                    e.printStackTrace();
-                }
-            }
-            else if(o instanceof StateRequest){
-
-                System.out.println("Recebi mensagem de pedido de estado!");
-
-                ArrayList<byte[]> estado = getStateMessages(((StateRequest)o).id);
-
-                for(byte[] b: estado){
-                    SpreadMessage sm = new SpreadMessage();
-                    sm.addGroup(spreadMessage.getSender());
-                    sm.setData(b);
-                    sm.setReliable();
-                    sm.setFifo();
-                    try {
-                        connection.multicast(sm);
-                    } catch (SpreadException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            else{
-                System.out.println("Erro, recebi algo que não estava à espera! " + o.getClass());
-            }*/
-
         }
     };
 
     private void trataFila() {
         for(Object o: fila)
             trataMensagem(o);
+    }
+
+    private boolean executaOrdemCompra(OrdemCompra oc){
+        Holder h = acoesHolders.get(oc.holder);
+        Holder aux = acoesHolders.get(oc.comprador); //comprador das acoes
+        boolean res = false;
+        if(h != null && aux != null){
+            res = h.compra(oc.quantidade);
+            if(res) {
+                aux.adiciona(oc.quantidade);
+            }
+        }
+        else{
+            if(h == null) {
+                System.out.println("Holder é null! O que fazer???");
+            }
+            else{
+                System.out.println("Comprador é null! O que fazer???");
+            }
+        }
+        return res;
+    }
+
+    private boolean executaOrdemVenda(Ordem ord){
+        Holder h = acoesHolders.get(ord.holder);
+        boolean res = false;
+        if(h != null){
+            res = h.venda(ord.quantidade);
+        }
+        else{
+            System.out.println("Holder não existe!!! O que fazer???");
+//            Holder ho = new Holder(ord.holder,ord.quantidade);
+//            acoesHolders.put(ord.holder,ho);
+        }
+
+        return res;
+    }
+
+    private boolean executaRegisto(Registo r){
+        boolean res = false;
+
+        if (!acoesHolders.containsKey(r.holder)) {
+
+            Holder n = new Holder(r.holder, r.acoes);
+
+            acoesHolders.put(r.holder, n);
+
+            res = true;
+
+        }
+        return res;
     }
 
     private void trataMensagem(Object oA) {
@@ -271,6 +218,7 @@ public class Server {
         Object o = s.decode(spreadMessage.getData());
 
         if(o instanceof Ordem){
+            operacoesCheckpoint++;
             System.out.println("Para já tratamos como nas aulas, ou seja diretamente!");
 
             Ordem ord = (Ordem)o;
@@ -279,36 +227,20 @@ public class Server {
 
             if(o instanceof OrdemCompra){
                 OrdemCompra oc = (OrdemCompra)ord;
-                Holder h = acoesHolders.get(ord.holder);
-                Holder aux = acoesHolders.get(oc.comprador); //comprador das acoes
-                if(h != null && aux != null){
-                    res = h.compra(ord.quantidade);
-                    if(res) {
-                        aux.adiciona(oc.quantidade);
-                    }
-                }
-                else{
-                    if(h == null) {
-                        System.out.println("Holder é null! O que fazer???");
-                    }
-                    else{
-                        System.out.println("Comprador é null! O que fazer???");
-                    }
-                }
+                res = executaOrdemCompra(oc);
             }
             else{
-                Holder h = acoesHolders.get(ord.holder);
-                if(h != null){
-                    res = h.venda(ord.quantidade);
-                }
-                else{
-                    System.out.println("Holder não existe!!! O que fazer???");
-//                        Holder ho = new Holder(ord.holder,ord.quantidade);
-//                        acoesHolders.put(ord.holder,ho);
-                }
+                res = executaOrdemVenda(ord);
             }
 
             ordensConcluidas.put(ord.id,ord);
+
+            log.writeLogUpdates(checkpointAtual,ord);
+
+            if(operacoesCheckpoint > Config.operacoesPorCheckpoint){
+                operacoesCheckpoint = 0;
+                log.writeCheckpoint(new StateLog(acoesHolders,ordensConcluidas,checkpointAtual++));
+            }
 
             RespostaOrdem ro = new RespostaOrdem(ord.id,res);
             SpreadMessage sm = new SpreadMessage();
@@ -323,19 +255,18 @@ public class Server {
         }
 
         else if (o instanceof Registo) {
-
+            operacoesCheckpoint++;
             Registo r = ((Registo) o);
 
-            boolean res = false;
+            boolean res = executaRegisto(r);
 
-            if (!acoesHolders.containsKey(r.holder)) {
+            ordensConcluidas.put(r.id,r);
 
-                Holder n = new Holder(r.holder, r.acoes);
+            log.writeLogUpdates(checkpointAtual,r);
 
-                acoesHolders.put(r.holder, n);
-
-                res = true;
-
+            if(operacoesCheckpoint > Config.operacoesPorCheckpoint){
+                operacoesCheckpoint = 0;
+                log.writeCheckpoint(new StateLog(acoesHolders,ordensConcluidas,checkpointAtual++));
             }
 
             RespostaOrdem ro = new RespostaOrdem(r.id, res);
@@ -369,7 +300,7 @@ public class Server {
         else if(o instanceof StateRequest){
             System.out.println("Recebi pedido de estado!");
 
-            ArrayList<byte[]> estado = getStateMessages(((StateRequest)o).id);
+            ArrayList<byte[]> estado = getStateMessages(((StateRequest)o).id, ((StateRequest)o).updates);
 
             for(byte[] b: estado){
                 SpreadMessage sm = new SpreadMessage();
@@ -388,7 +319,7 @@ public class Server {
             System.out.println("Erro, recebi algo que não estava à espera! " + o.getClass());
         }
 
-        log.writeCheckpoint(new StateLog(acoesHolders,ordensConcluidas,0));
+
     }
 
     private void recuperaEstado() {
@@ -403,27 +334,89 @@ public class Server {
 
         StateReply sr = s.decode(combined);
 
-        this.acoesHolders.putAll(sr.acoesHolders);
-        this.ordensConcluidas.putAll(sr.ordensConcluidas);
+        System.out.println("Recupera estado!");
+        System.out.println(sr.ordensConcluidas);
+
+        int nOps = 0;
+        for(Map.Entry<String,Operacao> entry : sr.ordensConcluidas.entrySet()){
+            Operacao o = entry.getValue();
+            if(o instanceof OrdemCompra){
+                log.writeLogUpdates(checkpointAtual,o);
+                executaOrdemCompra((OrdemCompra)o);
+                this.ordensConcluidas.put(entry.getKey(),o);
+                nOps++;
+            }
+            else if(o instanceof Ordem){
+                log.writeLogUpdates(checkpointAtual,o);
+                executaOrdemVenda((Ordem)o);
+                this.ordensConcluidas.put(entry.getKey(),o);
+                nOps++;
+            }
+            else if(o instanceof Registo){
+                log.writeLogUpdates(checkpointAtual,o);
+                executaRegisto((Registo)o);
+                this.ordensConcluidas.put(entry.getKey(),o);
+                nOps++;
+            }
+        }
+
+        if(nOps > Config.operacoesPorCheckpoint){
+            log.writeCheckpoint(new StateLog(acoesHolders,ordensConcluidas,checkpointAtual++));
+        }
+        else{
+            operacoesCheckpoint = nOps;
+        }
+    }
+
+    public void recuperaEstadoLog(){
+        StateLog estado = log.readLogCheckpoint();
+        if(estado != null) {
+            checkpointAtual = estado.id;
+            acoesHolders = estado.acoesHolders;
+            ordensConcluidas = estado.ordensConcluidas;
+        }
+
+        //recuperar updates
+        for(LogEntry le: log.readLogUpdates()){
+            System.out.println("Checkpoint atual: " + checkpointAtual);
+            System.out.println("Le: " + le.checkpoint);
+            if(le.checkpoint > checkpointAtual){
+                //fazer update
+                if(le.operacao instanceof OrdemCompra){
+                    executaOrdemCompra((OrdemCompra)le.operacao);
+                }
+                else if(le.operacao instanceof Ordem){
+                    executaOrdemVenda((Ordem)le.operacao);
+                }
+                else if(le.operacao instanceof Registo){
+                    executaRegisto((Registo)le.operacao);
+                }
+            }
+            ordensConcluidas.put(le.operacao.id,le.operacao);
+            nrUpdates++;
+        }
+
+        checkpointAtual++;
     }
 
     public Server(boolean recupera, String id) throws UnknownHostException, SpreadException {
 
-        log = new LogInterface(id+"-update.log",id+"checkpoint.log");
-        log.readLogCheckpoint();
 
         connection.connect(InetAddress.getByName(Config.spreadHost), 0, null, false, false);
         //para já não precisamos de nos preocupar com o group membership visto que vamos usar ativa
 
         estadoRecuperado = !recupera;
         idState = UUID.randomUUID().toString();
+        log = new LogInterface(id+"-update.log",id+"checkpoint.log");
+        recuperaEstadoLog();
 
         group.join(connection, Config.nomeGrupo);
         connection.add(bml);
 
 
         if(!estadoRecuperado) {
-            StateRequest sr = new StateRequest(idState);
+            System.out.println("Tenho: " + nrUpdates + " updates!");
+            StateRequest sr = new StateRequest(idState,nrUpdates);
             SpreadMessage sm = new SpreadMessage();
             sm.setData(s.encode(sr));
             sm.addGroup(Config.nomeGrupo);
