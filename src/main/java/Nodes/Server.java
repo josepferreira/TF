@@ -50,8 +50,6 @@ public class Server {
 
 
     public LogInterface log;
-    public int checkpointAtual = -1;
-    public int operacoesCheckpoint = 0;
     public int nrUpdates  = 0;
 
     public LinkedHashMap<String,Operacao> getStateOrders(int updatesRealizados){
@@ -218,7 +216,7 @@ public class Server {
         Object o = s.decode(spreadMessage.getData());
 
         if(o instanceof Ordem){
-            operacoesCheckpoint++;
+//            operacoesCheckpoint++;
             System.out.println("Para já tratamos como nas aulas, ou seja diretamente!");
 
             Ordem ord = (Ordem)o;
@@ -235,12 +233,12 @@ public class Server {
 
             ordensConcluidas.put(ord.id,ord);
 
-            log.writeLogUpdates(checkpointAtual,ord);
+            log.writeLogUpdates(ord);
 
-            if(operacoesCheckpoint > Config.operacoesPorCheckpoint){
+            /*if(operacoesCheckpoint > Config.operacoesPorCheckpoint){
                 operacoesCheckpoint = 0;
                 log.writeCheckpoint(new StateLog(acoesHolders,ordensConcluidas,checkpointAtual++));
-            }
+            }*/
 
             RespostaOrdem ro = new RespostaOrdem(ord.id,res);
             SpreadMessage sm = new SpreadMessage();
@@ -255,19 +253,19 @@ public class Server {
         }
 
         else if (o instanceof Registo) {
-            operacoesCheckpoint++;
+//            operacoesCheckpoint++;
             Registo r = ((Registo) o);
 
             boolean res = executaRegisto(r);
 
             ordensConcluidas.put(r.id,r);
 
-            log.writeLogUpdates(checkpointAtual,r);
+            log.writeLogUpdates(r);
 
-            if(operacoesCheckpoint > Config.operacoesPorCheckpoint){
-                operacoesCheckpoint = 0;
-                log.writeCheckpoint(new StateLog(acoesHolders,ordensConcluidas,checkpointAtual++));
-            }
+//            if(operacoesCheckpoint > Config.operacoesPorCheckpoint){
+//                operacoesCheckpoint = 0;
+//                log.writeCheckpoint(new StateLog(acoesHolders,ordensConcluidas,checkpointAtual++));
+//            }
 
             RespostaOrdem ro = new RespostaOrdem(r.id, res);
             SpreadMessage sm = new SpreadMessage();
@@ -337,38 +335,28 @@ public class Server {
         System.out.println("Recupera estado!");
         System.out.println(sr.ordensConcluidas);
 
-        int nOps = 0;
         for(Map.Entry<String,Operacao> entry : sr.ordensConcluidas.entrySet()){
             Operacao o = entry.getValue();
             if(o instanceof OrdemCompra){
-                log.writeLogUpdates(checkpointAtual,o);
+                log.writeLogUpdates(o);
                 executaOrdemCompra((OrdemCompra)o);
                 this.ordensConcluidas.put(entry.getKey(),o);
-                nOps++;
             }
             else if(o instanceof Ordem){
-                log.writeLogUpdates(checkpointAtual,o);
+                log.writeLogUpdates(o);
                 executaOrdemVenda((Ordem)o);
                 this.ordensConcluidas.put(entry.getKey(),o);
-                nOps++;
             }
             else if(o instanceof Registo){
-                log.writeLogUpdates(checkpointAtual,o);
+                log.writeLogUpdates(o);
                 executaRegisto((Registo)o);
                 this.ordensConcluidas.put(entry.getKey(),o);
-                nOps++;
             }
         }
 
-        if(nOps > Config.operacoesPorCheckpoint){
-            log.writeCheckpoint(new StateLog(acoesHolders,ordensConcluidas,checkpointAtual++));
-        }
-        else{
-            operacoesCheckpoint = nOps;
-        }
     }
 
-    public void recuperaEstadoLogAux(){
+    public void recuperaEstadoLog(){
         for(LogEntry le: log.readLogUpdates()){
                 //fazer update
             if(le.operacao instanceof OrdemCompra){
@@ -387,12 +375,13 @@ public class Server {
 //        System.out.println("NR: " + nrUpdates);
     }
 
-    public void recuperaEstadoLog(){
+/*
+    public void recuperaEstadoLogAux(){
         StateLog estado = log.readLogCheckpoint();
         if(estado != null) {
             checkpointAtual = estado.id;
             acoesHolders = estado.acoesHolders;
-//            ordensConcluidas = estado.ordensConcluidas;
+            ordensConcluidas = estado.ordensConcluidas;
         }
 
         //recuperar updates
@@ -410,13 +399,14 @@ public class Server {
                 else if(le.operacao instanceof Registo){
                     executaRegisto((Registo)le.operacao);
                 }
+                ordensConcluidas.put(le.operacao.id,le.operacao);
             }
-            ordensConcluidas.put(le.operacao.id,le.operacao);
             nrUpdates++;
         }
 //        System.out.println("NR: " + nrUpdates);
         checkpointAtual++;
     }
+*/
 
     public Server(boolean recupera, String id) throws UnknownHostException, SpreadException {
 
@@ -426,7 +416,7 @@ public class Server {
 
         estadoRecuperado = !recupera;
         idState = UUID.randomUUID().toString();
-        log = new LogInterface(id+"-update.log",id+"checkpoint.log");
+        log = new LogInterface(id+"-update.log");
         recuperaEstadoLog();
 
         group.join(connection, Config.nomeGrupo);
@@ -461,10 +451,10 @@ public class Server {
     public Server(String id){
         ArrayList<Long> times = new ArrayList<Long>();
         for(int i = 0; i < 50; i++){
-            log = new LogInterface(id+"-update.log",id+"checkpoint.log");
+            log = new LogInterface(id+"-update.log");
 
             long timeI = System.currentTimeMillis();
-            recuperaEstadoLogAux();
+            recuperaEstadoLog();
             long timeF = System.currentTimeMillis();
 
 //            System.out.println("Tempo em millis: " + (timeF-timeI));

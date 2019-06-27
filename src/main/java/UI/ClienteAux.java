@@ -16,7 +16,7 @@ public class ClienteAux {
         stub.regista("ola",1000000);
         stub.regista("cenas",1000000);
 
-        for(int i = 0; i < 200000; i++){
+        for(int i = 0; i < 100000; i++){
             Long enviar = ThreadLocalRandom.current().nextLong(1,200);
             Long aux = ThreadLocalRandom.current().nextLong(0,10);
             if(aux > 6){
