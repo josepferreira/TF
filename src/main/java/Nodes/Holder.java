@@ -1,5 +1,7 @@
 package Nodes;
 
+import java.util.Objects;
+
 public class Holder {
     public String nome;
     public long acoes;
@@ -44,4 +46,18 @@ public class Holder {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Holder holder = (Holder) o;
+        return acoes == holder.acoes &&
+                acoesVenda == holder.acoesVenda &&
+                Objects.equals(nome, holder.nome);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome, acoes, acoesVenda);
+    }
 }
