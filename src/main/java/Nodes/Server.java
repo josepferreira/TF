@@ -11,6 +11,7 @@ import Messages.Replication.StateTransfer;
 import io.atomix.utils.serializer.Serializer;
 import spread.*;
 
+import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
@@ -32,9 +33,7 @@ public class Server {
     public SpreadGroup group = new SpreadGroup();
 
     public Serializer s = Protocol.newSerializer();
-
-    public String endereco;
-
+    public String idServer;
 
 
     //recuperacao de estado
@@ -81,7 +80,6 @@ public class Server {
 
         ArrayList<byte[]> resposta = new ArrayList<>();
         for(int i = 0; i < nrMensagens; i++){
-            System.out.println("Mensagem de estado: " + i);
             int atual = i * MAXSIZE;
             int proximo = (i+1) * MAXSIZE;
 
@@ -113,7 +111,6 @@ public class Server {
                         System.out.println("Recebi mensagem de estado: " + st.numero);
 
                         if(!recebidas.contains(st.numero)){
-                            System.out.println("Vou considerar a mensagem de estado: " + st.numero);
                             recebidas.add(st.numero);
 
                             mensagensRecebidas.add(st.msg);
@@ -124,7 +121,6 @@ public class Server {
                                 System.out.println("Estado recuperado");
                                 recuperaEstado();
                                 trataFila();
-                                System.out.println("Fila tratada");
                             }
                         }
                         else{
@@ -168,10 +164,10 @@ public class Server {
         }
         else{
             if(h == null) {
-                System.out.println("Holder é null! O que fazer???");
+               // System.out.println("Holder é null! O que fazer???");
             }
             else{
-                System.out.println("Comprador é null! O que fazer???");
+                //System.out.println("Comprador é null! O que fazer???");
             }
         }
         return res;
@@ -184,7 +180,7 @@ public class Server {
             res = h.venda(ord.quantidade);
         }
         else{
-            System.out.println("Holder não existe!!! O que fazer???");
+            //System.out.println("Holder não existe!!! O que fazer???");
 //            Holder ho = new Holder(ord.holder,ord.quantidade);
 //            acoesHolders.put(ord.holder,ho);
         }
@@ -209,7 +205,7 @@ public class Server {
 
     private void trataMensagem(Object oA) {
         if(!(oA instanceof SpreadMessage)){
-            System.out.println("Não tenho em fila uma spread message!" + oA.getClass());
+            //System.out.println("Não tenho em fila uma spread message!" + oA.getClass());
             return;
         }
 
@@ -218,7 +214,6 @@ public class Server {
 
         if(o instanceof Ordem){
 //            operacoesCheckpoint++;
-            System.out.println("Para já tratamos como nas aulas, ou seja diretamente!");
 
             Ordem ord = (Ordem)o;
 
@@ -291,6 +286,16 @@ public class Server {
             sm.setReliable();
 
             try {
+                File yourFile = new File("estado-" + idServer + ".txt");
+                yourFile.createNewFile(); // if file already exists will do nothing
+                BufferedWriter writer = new BufferedWriter(new FileWriter(yourFile));
+                writer.write(acoesHolders.toString());
+                writer.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
                 connection.multicast(sm);
             } catch (SpreadException e) {
                 e.printStackTrace();
@@ -315,7 +320,7 @@ public class Server {
             }
         }
         else{
-            System.out.println("Erro, recebi algo que não estava à espera! " + o.getClass());
+//            System.out.println("Erro, recebi algo que não estava à espera! " + o.getClass());
         }
 
 
@@ -334,7 +339,7 @@ public class Server {
         StateReply sr = s.decode(combined);
 
         System.out.println("Recupera estado!");
-        System.out.println(sr.ordensConcluidas);
+        //System.out.println(sr.ordensConcluidas);
 
         for(Map.Entry<String,Operacao> entry : sr.ordensConcluidas.entrySet()){
             Operacao o = entry.getValue();
@@ -423,9 +428,7 @@ public class Server {
         group.join(connection, Config.nomeGrupo);
         connection.add(bml);
 
-        boolean started = false;
-        int porta = Config.portaInicial;
-        this.endereco = Config.hostAtomix + ":" + porta;
+        idServer = id;
 
         if(!estadoRecuperado) {
             System.out.println("Tenho: " + nrUpdates + " updates!");

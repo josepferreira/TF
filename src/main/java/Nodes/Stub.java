@@ -32,14 +32,12 @@ public class Stub {
                 RespostaOrdem ro = (RespostaOrdem)o;
                 CompletableFuture<Boolean> cf = cfs.get(ro.id);
 
-                while(cf == null){
+                if(cf == null){
                     System.out.println("Erro, cf é null ou seja o pedido não existe! RespostaOrdem");
-                    System.out.println("ID: " + ro.id);
-                    System.out.println("Ordem: " + ordens.get(ro.id));
-                    System.out.println("CF: " + cfs.get(ro.id));
-                    cf = cfs.get(ro.id);
                 }
-                cf.complete(ro.resultado);
+                else {
+                    cf.complete(ro.resultado);
+                }
             }
 
             else if (o instanceof RespostaRegisto) {

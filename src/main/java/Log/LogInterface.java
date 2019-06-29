@@ -49,7 +49,6 @@ public class LogInterface {
 
         LogEntry le = new LogEntry(o);
         writerUpdate.append(le);
-        System.out.println("Escrito");
     }
 
 }

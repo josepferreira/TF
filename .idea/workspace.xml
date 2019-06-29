@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c3d9e37c-6b2f-4eec-a4d0-89539d28f81c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Avaliacao/AvaliacaoDesempenho.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Configuration/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Configuration/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Log/LogInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Log/LogInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Nodes/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Nodes/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Nodes/Stub.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Nodes/Stub.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/UI/ClienteAvaliacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UI/ClienteAvaliacao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/UI/ServidorAvaliacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UI/ServidorAvaliacao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/UI/ClienteAvaliacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Avaliacao/ClienteAvaliacao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/UI/ServidorAvaliacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Avaliacao/ServidorAvaliacao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/TF.kotlin_module" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -22,11 +25,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Nodes/Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="462">
+              <caret line="461" selection-start-line="461" selection-end-line="461" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -54,23 +60,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/UI/ServidorAvaliacao.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Avaliacao/ClienteAvaliacao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#holders#0;class#ServidorAvaliacao#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/UI/ClienteAvaliacao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="867">
-              <caret line="91" column="52" selection-start-line="91" selection-start-column="52" selection-end-line="91" selection-end-column="52" />
+            <state relative-caret-position="420">
+              <caret line="43" column="58" selection-start-line="37" selection-start-column="4" selection-end-line="54" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -78,14 +71,17 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Nodes/Holder.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Avaliacao/AvaliacaoDesempenho.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="3" selection-start-line="3" selection-end-line="3" />
+            <state relative-caret-position="226">
+              <caret line="103" column="25" selection-start-line="103" selection-start-column="25" selection-end-line="103" selection-end-column="25" />
               <folding>
-                <element signature="e#1263#1264#0" expanded="true" />
-                <element signature="e#1323#1324#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#808#809#0" expanded="true" />
+                <element signature="e#841#842#0" expanded="true" />
+                <element signature="e#484#485#0" expanded="true" />
+                <element signature="e#516#517#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -111,6 +107,11 @@
       <find>OrdemCompra</find>
       <find>Desca</find>
       <find>regista</find>
+      <find>System.out.println</find>
+      <find>PedidoHolder</find>
+      <find>endereco</find>
+      <find>Des</find>
+      <find>descansei</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -131,7 +132,6 @@
         <option value="$PROJECT_DIR$/src/main/java/Messages/RespostaHolders.java" />
         <option value="$PROJECT_DIR$/src/main/java/Messages/Replication/StateTransfer.java" />
         <option value="$PROJECT_DIR$/src/main/java/UI/Menu.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/Log/State.java" />
         <option value="$PROJECT_DIR$/src/main/java/Log/TestLog.java" />
         <option value="$PROJECT_DIR$/src/main/java/Messages/Replication/StateRequest.java" />
@@ -143,14 +143,17 @@
         <option value="$PROJECT_DIR$/src/main/java/UI/Servidor.java" />
         <option value="$PROJECT_DIR$/src/main/java/Log/StateLog.java" />
         <option value="$PROJECT_DIR$/src/main/java/Log/LogEntry.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Log/LogInterface.java" />
         <option value="$PROJECT_DIR$/src/main/java/UI/ClienteAux.java" />
         <option value="$PROJECT_DIR$/src/main/java/Nodes/Holder.java" />
         <option value="$PROJECT_DIR$/src/main/java/UI/ServidorAvaliacao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Configuration/Config.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Log/LogInterface.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Nodes/Server.java" />
         <option value="$PROJECT_DIR$/src/main/java/Nodes/Stub.java" />
         <option value="$PROJECT_DIR$/src/main/java/UI/ClienteAvaliacao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Configuration/Config.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Nodes/Server.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Avaliacao/ClienteAvaliacao.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/Avaliacao/AvaliacaoDesempenho.java" />
       </list>
     </option>
   </component>
@@ -214,6 +217,14 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tp1819" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TF" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Avaliacao" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="tp1819" type="b2602c69:ProjectViewProjectNode" />
@@ -297,11 +308,11 @@
       </method>
     </configuration>
     <configuration name="ClienteAvaliacao" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="UI.ClienteAvaliacao" />
+      <option name="MAIN_CLASS_NAME" value="Avaliacao.ClienteAvaliacao" />
       <module name="TF" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="UI.*" />
+          <option name="PATTERN" value="Avaliacao.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -367,7 +378,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16325401" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -392,7 +402,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Maven" order="4" weight="0.32761484" />
+      <window_info anchor="right" id="Maven" order="4" visible="true" weight="0.32761484" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
@@ -480,13 +490,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="40" selection-start-line="40" selection-end-line="40" />
         </state>
       </provider>
     </entry>
@@ -593,38 +596,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/UI/ServidorAvaliacao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#holders#0;class#ServidorAvaliacao#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Nodes/Stub.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="18" column="77" selection-start-line="18" selection-start-column="77" selection-end-line="18" selection-end-column="77" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#close#0;class#Stub#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/UI/ClienteAvaliacao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="91" column="52" selection-start-line="91" selection-start-column="52" selection-end-line="91" selection-end-column="52" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Configuration/Config.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -645,8 +616,64 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Nodes/Server.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        <state relative-caret-position="462">
+          <caret line="461" selection-start-line="461" selection-end-line="461" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Nodes/Stub.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="18" column="77" selection-start-line="18" selection-start-column="77" selection-end-line="18" selection-end-column="77" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#close#0;class#Stub#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Avaliacao/ServidorAvaliacao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#holders#0;class#ServidorAvaliacao#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="781">
+          <caret line="100" column="21" selection-start-line="100" selection-start-column="21" selection-end-line="100" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Avaliacao/ClienteAvaliacao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="43" column="58" selection-start-line="37" selection-start-column="4" selection-end-line="54" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Avaliacao/AvaliacaoDesempenho.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="103" column="25" selection-start-line="103" selection-start-column="25" selection-end-line="103" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#808#809#0" expanded="true" />
+            <element signature="e#841#842#0" expanded="true" />
+            <element signature="e#484#485#0" expanded="true" />
+            <element signature="e#516#517#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

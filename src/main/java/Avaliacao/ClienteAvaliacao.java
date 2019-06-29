@@ -1,10 +1,7 @@
-package UI;
+package Avaliacao;
 
-import Messages.Operations.Operacao;
 import Nodes.Holder;
 import Nodes.Stub;
-import com.google.common.primitives.Longs;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import spread.SpreadException;
 
 import java.net.UnknownHostException;
@@ -89,7 +86,8 @@ public class ClienteAvaliacao {
 
             if(i % 3000 == 0){
                 Thread.sleep(2000);
-                System.out.println("Descansei: " + i);
+                if(i != 0)
+                    System.out.println("Enviei " + i + " pedidos!");
             }
             int op = r.nextInt(10);
             switch(op){
