@@ -11,13 +11,14 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Stub {
     public SpreadConnection connection = new SpreadConnection();
 
-    public HashMap<String, Ordem> ordens = new HashMap<>();
-    public HashMap<String,CompletableFuture<Boolean>> cfs = new HashMap<>();
-    public HashMap<String,CompletableFuture<HashMap<String,Holder>>> cfHolder = new HashMap<>();
+    public ConcurrentHashMap<String, Ordem> ordens = new ConcurrentHashMap<>();
+    public ConcurrentHashMap<String,CompletableFuture<Boolean>> cfs = new ConcurrentHashMap<>();
+    public ConcurrentHashMap<String,CompletableFuture<HashMap<String,Holder>>> cfHolder = new ConcurrentHashMap<>();
 
     public Serializer s = Protocol.newSerializer();
 
@@ -31,12 +32,14 @@ public class Stub {
                 RespostaOrdem ro = (RespostaOrdem)o;
                 CompletableFuture<Boolean> cf = cfs.get(ro.id);
 
-                if(cf == null){
-                    System.out.println("Erro, cf é null ou seja o pedido não existe!");
+                while(cf == null){
+                    System.out.println("Erro, cf é null ou seja o pedido não existe! RespostaOrdem");
+                    System.out.println("ID: " + ro.id);
+                    System.out.println("Ordem: " + ordens.get(ro.id));
+                    System.out.println("CF: " + cfs.get(ro.id));
+                    cf = cfs.get(ro.id);
                 }
-                else{
-                    cf.complete(ro.resultado);
-                }
+                cf.complete(ro.resultado);
             }
 
             else if (o instanceof RespostaRegisto) {
@@ -45,7 +48,7 @@ public class Stub {
                 CompletableFuture<Boolean> cf = cfs.get(ro.id);
 
                 if(cf == null){
-                    System.out.println("Erro, cf é null ou seja o pedido não existe!");
+                    System.out.println("Erro, cf é null ou seja o pedido não existe! RespostaRegisto");
                 }
                 else{
                     cf.complete(ro.resultado);
@@ -57,7 +60,7 @@ public class Stub {
                 CompletableFuture<HashMap<String,Holder>> cf = cfHolder.get(rh.id);
 
                 if(cf == null){
-                    System.out.println("Erro, cf é null ou seja o pedido não existe!");
+                    System.out.println("Erro, cf é null ou seja o pedido não existe! Resposta Holders");
                 }
                 else{
                     cf.complete(rh.holders);

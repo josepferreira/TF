@@ -13,11 +13,8 @@ public class ServidorAvaliacao {
         Holder h = acoesHolders.get(holder);
         boolean res = false;
         if(h != null){
-            res = h.venda(quantidade);
-        }
-        else{
-//            Holder ho = new Holder(ord.holder,ord.quantidade);
-//            acoesHolders.put(ord.holder,ho);
+            h.venda(quantidade);
+            res = true;
         }
 
         return res;
@@ -28,16 +25,9 @@ public class ServidorAvaliacao {
         Holder aux = acoesHolders.get(comprador); //comprador das acoes
         boolean res = false;
         if(h != null && aux != null){
-            res = h.compra(quantidade);
-            if(res) {
-                aux.adiciona(quantidade);
-            }
-        }
-        else{
-            if(h == null) {
-            }
-            else{
-            }
+            h.compra(quantidade);
+            aux.adiciona(quantidade);
+            res = true;
         }
         return res;
     }
@@ -54,6 +44,7 @@ public class ServidorAvaliacao {
             res = true;
 
         }
+
         return res;
     }
 

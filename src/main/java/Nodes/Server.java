@@ -4,12 +4,10 @@ import Configuration.Config;
 import Configuration.Protocol;
 import Log.LogEntry;
 import Log.LogInterface;
-import Log.StateLog;
 import Messages.Operations.*;
 import Messages.Replication.StateReply;
 import Messages.Replication.StateRequest;
 import Messages.Replication.StateTransfer;
-import UI.Servidor;
 import io.atomix.utils.serializer.Serializer;
 import spread.*;
 
@@ -35,6 +33,9 @@ public class Server {
 
     public Serializer s = Protocol.newSerializer();
 
+    public String endereco;
+
+
 
     //recuperacao de estado
     public boolean descarta = true;
@@ -46,7 +47,7 @@ public class Server {
     public ArrayList<byte[]> mensagensRecebidas = new ArrayList<>();
     public int tamanhoTotal = 0;
 
-    public static int MAXSIZE = 10;//*1000;
+    public static int MAXSIZE = 80*1000;
 
 
     public LogInterface log;
@@ -422,6 +423,9 @@ public class Server {
         group.join(connection, Config.nomeGrupo);
         connection.add(bml);
 
+        boolean started = false;
+        int porta = Config.portaInicial;
+        this.endereco = Config.hostAtomix + ":" + porta;
 
         if(!estadoRecuperado) {
             System.out.println("Tenho: " + nrUpdates + " updates!");

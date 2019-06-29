@@ -1,49 +1,38 @@
 package UI;
 
+import Messages.Operations.Operacao;
 import Nodes.Holder;
 import Nodes.Stub;
 import com.google.common.primitives.Longs;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import spread.SpreadException;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ClienteAvaliacao {
 
-    static class Difere{
-        public String operacao;
-        public long quantidade;
-        public String holder;
-        public String comprador;
+    static class Op{
+        public int op;
+        public long q;
+        public String h;
+        public String c;
+        CompletableFuture<Boolean> res;
 
-        public boolean resSA;
-        public boolean resServer;
-
-        public Difere(String operacao, long quantidade, String holder, String comprador, boolean resSA, boolean resServer) {
-            this.operacao = operacao;
-            this.quantidade = quantidade;
-            this.holder = holder;
-            this.comprador = comprador;
-            this.resSA = resSA;
-            this.resServer = resServer;
-        }
-
-        @Override
-        public String toString() {
-            return "Difere{" +
-                    "operacao='" + operacao + '\'' +
-                    ", quantidade=" + quantidade +
-                    ", holder='" + holder + '\'' +
-                    ", comprador='" + comprador + '\'' +
-                    ", resSA=" + resSA +
-                    ", resServer=" + resServer +
-                    '}';
+        public Op(int op, long q, String h, String c, CompletableFuture<Boolean> res) {
+            this.op = op;
+            this.q = q;
+            this.h = h;
+            this.c = c;
+            this.res = res;
         }
     }
+
     static String holder = "holder";
     static int quantos = 20;
     static Random r = new Random();
@@ -68,23 +57,27 @@ public class ClienteAvaliacao {
         return holder+a;
     }
 
-    public static void comparaBoolean(boolean a, boolean b, int i){
+    public static void comparaBoolean(boolean a, boolean b){
         if(a == b){
         }
         else{
-            System.out.println("Resultado de operacao: " + i + " DIFERENTE!");
+            System.out.println("Resultado de operacao DIFERENTE!");
         }
     }
 
     public static void main(String[] args) throws SpreadException, UnknownHostException, ExecutionException, InterruptedException {
         Stub stub = new Stub();
         ServidorAvaliacao sa = new ServidorAvaliacao();
+        int  opers = 100000;
+        CompletableFuture<Boolean>[] ops = new CompletableFuture[quantos+opers];
+        ArrayList<Op> opsAux = new ArrayList<>();
 
         for(int i = 0; i < quantos; i++){
             long q = quantidadeRegisto();
-            boolean a = stub.regista(holder+i,q).get();
-            boolean b = sa.regista(holder+i,q);
-            comparaBoolean(a,b,i);
+            CompletableFuture<Boolean> a = stub.regista(holder + i, q);
+            ops[i] = a;
+            opsAux.add(new Op(0,q,holder+i,null,a));
+            final int aux = i;
             holdersE.add(holder+i);
         }
 
@@ -92,18 +85,22 @@ public class ClienteAvaliacao {
         holdersE.add(holder+350);
         holdersE.add(holder+600);
 
-        ArrayList<Difere> diferem = new ArrayList<>();
-        for(int i = 0; i < 10000; i++) {
+        for(int i = 0; i < opers; i++) {
 
+            if(i % 3000 == 0){
+                Thread.sleep(2000);
+                System.out.println("Descansei: " + i);
+            }
             int op = r.nextInt(10);
             switch(op){
                 case 0:
                     //registo
                     String h = newHolder();
                     long q = quantidadeRegisto();
-                    boolean a = stub.regista(h,q).get();
-                    boolean b = sa.regista(h,q);
-                    comparaBoolean(a,b,i+quantos);
+                    CompletableFuture<Boolean> a = stub.regista(h,q);
+                    ops[i+quantos] = a;
+                    opsAux.add(new Op(0,q,h,null,a));
+
                     break;
                 default:
                     int op2 = r.nextInt(2);
@@ -114,29 +111,48 @@ public class ClienteAvaliacao {
                             long q2 = quantidade();
                             String c = holder();
 
-                            boolean a2 = stub.compra(h2,q2,c).get();
-                            boolean b2 = sa.compra(h2,q2,c);
-                            comparaBoolean(a2,b2,i+quantos);
-                            if(a2 != b2){
-                                diferem.add(new Difere("venda",q2,h2,c,b2,a2));
-                            }
+                            CompletableFuture<Boolean> a2 = stub.compra(h2,q2,c);
+                            ops[i+quantos] = a2;
+                            opsAux.add(new Op(1,q2,h2,c,a2));
+
+
                             break;
                         default:
                             //venda
                             String h3 = holder();
                             long q3 = quantidade();
 
-                            boolean a3 = stub.venda(h3,q3).get();
-                            boolean b3 = sa.venda(h3,q3);
-                            comparaBoolean(a3,b3,i+quantos);
-                            if(a3 != b3){
-                                diferem.add(new Difere("venda",q3,h3,null,b3,a3));
-                            }
+                            CompletableFuture<Boolean> a3 = stub.venda(h3, q3);
+                            ops[i+quantos] = a3;
+                            opsAux.add(new Op(2,q3,h3,null,a3));
+
                             break;
                     }
                     break;
 
             }
+        }
+        CompletableFuture.allOf(ops);
+
+        for(Op o : opsAux){
+            boolean r = o.res.get();
+            if(r) {
+                switch (o.op) {
+                    case 0:
+                        boolean b = sa.regista(o.h, o.q);
+                        comparaBoolean(r, b);
+                        break;
+                    case 1:
+                        boolean b1 = sa.compra(o.h, o.q, o.c);
+                        comparaBoolean(r, b1);
+                        break;
+                    default:
+                        boolean b2 = sa.venda(o.h, o.q);
+                        comparaBoolean(r, b2);
+                        break;
+                }
+            }
+
         }
 
         HashMap<String, Holder> estadoSA = sa.holders();
@@ -144,14 +160,18 @@ public class ClienteAvaliacao {
 
         System.out.println("Estados iguais: " + estadoSA.equals(estadoServer));
 
-        /*System.out.println("Servidor");
-        System.out.println(estadoServer);
-        System.out.println();
-        System.out.println("SA");
-        System.out.println(estadoSA)*/;
+        for(String k : estadoSA.keySet()){
 
-        for(Difere d: diferem){
-            System.out.println(d);
+            Holder h1 = estadoSA.get(k);
+            Holder h2 = estadoServer.get(k);
+
+            if(!h1.equals(h2)) {
+                System.out.println("Diferentes");
+                System.out.println(h1);
+                System.out.println(h2);
+            }
         }
+
+
     }
 }
