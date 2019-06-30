@@ -24,3 +24,7 @@ Repositório do TP da UC Tolerância a Faltas
 
 ### Limpar tudo
 - sh clear.sh
+
+## Outras instruções
+
+Na pasta está um vídeo que contém uma demonstração da avaliação da consistência.
