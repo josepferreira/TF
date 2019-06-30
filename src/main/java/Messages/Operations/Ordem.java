@@ -9,4 +9,14 @@ public class Ordem extends Operacao{
         this.quantidade = quantidade;
         this.holder = holder;
     }
+
+    @Override
+    public String toString() {
+        return "Ordem{" +
+                "quantidade=" + quantidade +
+                ", holder='" + holder + '\'' +
+                ", id='" + id + '\'' +
+                ", resposta=" + resposta +
+                '}';
+    }
 }

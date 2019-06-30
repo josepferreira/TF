@@ -10,10 +10,6 @@ public class Config {
 
     public static int portaInicial = 20000;
     public static int rangePortas = 20000;
-    public static String hostAtomix = "localhost";
-
-
-    public static boolean eLong = true;
 
     public static int getPorta(){
         Random r = new Random();

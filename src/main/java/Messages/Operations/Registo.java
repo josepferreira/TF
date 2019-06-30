@@ -9,4 +9,14 @@ public class Registo extends Operacao{
         this.holder = holder;
         this.acoes = acoes;
     }
+
+    @Override
+    public String toString() {
+        return "Registo{" +
+                "holder='" + holder + '\'' +
+                ", acoes=" + acoes +
+                ", id='" + id + '\'' +
+                ", resposta=" + resposta +
+                '}';
+    }
 }

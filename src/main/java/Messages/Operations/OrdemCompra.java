@@ -8,4 +8,15 @@ public class OrdemCompra extends Ordem {
         super(id, quantidade, holder);
         this.comprador = comprador;
     }
+
+    @Override
+    public String toString() {
+        return "OrdemCompra{" +
+                "comprador='" + comprador + '\'' +
+                ", quantidade=" + quantidade +
+                ", holder='" + holder + '\'' +
+                ", id='" + id + '\'' +
+                ", resposta=" + resposta +
+                '}';
+    }
 }
