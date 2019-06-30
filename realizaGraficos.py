@@ -30,27 +30,20 @@ def read(nome):
 def leFicheiro(nome):
     dados = read(nome)
     x = []
-    y_m = []
-    y_95 = []
-    y_99 = []
     medias = []
     tps = []
     chaves = [int(i) for i in dados.keys()]
     for k in sorted(chaves):
         x.append(k)
         aux = np.array(dados[str(k)])
-        pc = np.percentile(aux, [50,95,99])
         media = np.mean(aux)
         tp = len(aux) / ( np.sum(aux) ) * 1000
-        y_m.append(pc[0])
-        y_95.append(pc[1])
-        y_99.append(pc[2])
         medias.append(media)
         tps.append(tp)
     
-    return (x,y_m,y_95,y_99,medias,tps)
+    return (x,medias,tps)
 
-def criaGrafico(x,y,label):
+def criaGrafico(x,y,label, ylabel):
     for i in y:
         plt.plot(x,i)
     
@@ -62,25 +55,16 @@ def criaGrafico(x,y,label):
 
     plt.title(label)
     plt.xlabel('Nr. clientes concorrentes')
-    plt.ylabel('Tempo de resposta (ms)')
+    plt.ylabel(ylabel)
     plt.show()
 
-y_ms = []
-y_95s = []
-y_99s = []
-media = []
+medias = []
 tps = []
 for fich in ficheiros:
-    (x,y_m,y_95,y_99, ms, tp) = leFicheiro(fich)
-    y_ms.append(y_m)
-    y_95s.append(y_95)
-    y_99s.append(y_99)
-    media.append(ms)
+    (x, media, tp) = leFicheiro(fich)
+    medias.append(media)
     tps.append(tp)
 
-criaGrafico(x,y_ms,label+' (mediana)')
-criaGrafico(x,y_95s,label+' (percentil_95)')
-criaGrafico(x,y_99s,label+' (percentil_99)')
-criaGrafico(x,media,label+' (média)')
-criaGrafico(x,tps,label+' (throughput)')
+criaGrafico(x,medias,label+' (média)', 'Tempo de resposta (ms)')
+criaGrafico(x,tps,label+' (throughput)', 'Nr. operações por segundo')
 
